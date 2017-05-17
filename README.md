@@ -7,7 +7,7 @@
 
 - *Visualisation of high-dimensional data*:
    [`Rmd`](https://github.com/lgatto/visualisation/blob/master/highdimvis.Rmd),
-   for code to generate figures) or
+   (for code to generate figures) or
    [slides in `html`](https://htmlpreview.github.io/?https://github.com/lgatto/visualisation/blob/master/highdimvis.html#).
 
 
