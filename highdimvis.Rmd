@@ -15,8 +15,8 @@ Laurent Gatto                      Computational Proteomics Unit
 https://lgatto.github.io           University of Cambridge
 lg390@cam.ac.uk                    @lgatt0
 ```
-
-Source: https://github.com/lgatto/visualisation
+Slides: http://bit.ly/highdimvis  
+Source: https://github.com/lgatto/visualisation  
 
 
 ```{r env, warning=FALSE, echo=FALSE}
@@ -167,7 +167,7 @@ if (!file.exists("./cache/tsnes.rda")) {
 ```
 
 ```{r tsnesplots, echo=FALSE}
-par(mfrow = c(3, 3),
+par(mfrow = c(3, 4),
     oma = rep(0, 4),
     mar = c(1, 1, 3, 1))
 for (i in 1:9)

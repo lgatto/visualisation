@@ -15,8 +15,8 @@ Laurent Gatto                      Computational Proteomics Unit
 https://lgatto.github.io           University of Cambridge
 lg390@cam.ac.uk                    @lgatt0
 ```
-
-Source: https://github.com/lgatto/visualisation
+Slides: http://bit.ly/highdimvis  
+Source: https://github.com/lgatto/visualisation  
 
 
 
