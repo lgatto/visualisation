@@ -39,6 +39,9 @@ between all features (or samples) and then clusters/groups these based
 on these similarities. There are various distances measures and
 clustering algorithms that can be used. 
 
+## {.fullpage}
+
+![plot of chunk hclust](figure/hclust-1.png)
 
 ## Principal Component Analysis
 

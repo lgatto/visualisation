@@ -45,9 +45,19 @@ between all features (or samples) and then clusters/groups these based
 on these similarities. There are various distances measures and
 clustering algorithms that can be used. 
 
-```{r}
+## {.fullpage}
 
+```{r hclust, echo=FALSE, fig.width=12, fig.height=6}
+d <- dist(exprs(t(mulvey2015)))
+hcl <- hclust(d)
+par(mfrow = c(1, 2))
+plot(hcl, xlab = "",
+     main = "Samples from Mulvey et al. (2015)",
+     sub = "Euclidian distance\nComplete clustering")
+mrkHClust(hyperLOPIT2015,
+          main = "Organelle protein markers from Christoforou et al. (2016)")
 ```
+
 ## Principal Component Analysis
 
 Principal Component Analysis (PCA) is a technique that transforms the
