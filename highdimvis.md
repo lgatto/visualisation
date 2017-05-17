@@ -47,6 +47,17 @@ Plots prepared with `dist` and `hclust` from the `stats` package and
 
 ![plot of chunk hclust](figure/hclust-1.png)
 
+## Dimensionality reduction
+
+When the data spans over many dimensions (more than 2 or 3, or
+thousands of dimensions), it becomes impossible to easily visualise it
+in its entirety. *Dimensionality reduction* techniques such as **PCA**
+or **t-SNE** will transform the data into 2 new dimension that
+summarise properties of the whole data set. These are used to
+visualise the data along these informative dimensions or perform
+calculations more efficiently.
+
+
 ## Principal Component Analysis
 
 Principal Component Analysis (PCA) is a technique that transforms the
