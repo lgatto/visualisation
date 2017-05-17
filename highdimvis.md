@@ -23,21 +23,21 @@ Source: https://github.com/lgatto/visualisation
 
 ## Proteomics examples
 
-Sample-level visualisations from
+Sample-level visualisations using data from
 [Mulvey *et al.* (2015)](https://www.ncbi.nlm.nih.gov/pubmed/26059426)
 *Dynamic Proteomic Profiling of Extra-Embryonic Endoderm
 Differentiation in Mouse Embryonic Stem Cells.*
 
-Protein-level visualisations from
+Protein-level visualisations using data from
 [Christoforou *et al.* (2016)](https://www.ncbi.nlm.nih.gov/pubmed/26754106)
 *A draft map of the mouse pluripotent stem cell spatial proteome.*
 
 ## Hierarchical clustering
 
-Hierarchincal clustering start by calculating all pairwise distances
-between all features (or samples) and then clusters/groups these based
-on these similarities. There are various distances measures and
-clustering algorithms that can be used. 
+Hierarchical clustering methods start by calculating all pairwise
+distances between all features (or samples) and then clusters/groups
+these based on these similarities. There are various distances
+measures and clustering algorithms that can be used.
 
 Plots prepared with `dist` and `hclust` from the `stats` package and
 `mrkHClust` from
@@ -49,13 +49,13 @@ Plots prepared with `dist` and `hclust` from the `stats` package and
 
 ## Dimensionality reduction
 
-When the data spans over many dimensions (more than 2 or 3, or
-thousands of dimensions), it becomes impossible to easily visualise it
-in its entirety. *Dimensionality reduction* techniques such as **PCA**
-or **t-SNE** will transform the data into 2 new dimension that
-summarise properties of the whole data set. These are used to
-visualise the data along these informative dimensions or perform
-calculations more efficiently.
+When the data span over many dimensions (more than 2 or 3, up to
+thousands), it becomes impossible to easily visualise it in its
+entirety. *Dimensionality reduction* techniques such as **PCA** or
+**t-SNE** will transform the data into a new space that summarise
+properties of the whole data set along a reduced number of
+dimensions. These are then used to visualise the data along these
+informative dimensions or perform calculations more efficiently.
 
 
 ## Principal Component Analysis
@@ -67,7 +67,8 @@ most of its variability along the first PC, then second, .... These
 new dimensions are *linear combinations* of the orignal data.
 
 Figures produces with `plot2D` function from the
-[`pRoloc` package](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html)
+[`pRoloc`](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html)
+package.
 
 ## {.fullpage}
 
@@ -87,7 +88,8 @@ will compress small distances, thus bringing close neighbours
 together, and will ignore large distances.
 
 Figures produces with `plot2D` function from the
-[`pRoloc` package](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html)
+[`pRoloc`](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html)
+package.
 
 ## { .fullpage }
 
@@ -106,6 +108,7 @@ the clustering of the data
 It is important to adapt these for different data.
 
 ## { .fullpage }
+
 
 
 
