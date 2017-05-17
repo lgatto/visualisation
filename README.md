@@ -1,5 +1,9 @@
 ## Visualising data
 
-- `ggplot2` talk presented by Mark Dunning at the CambR meeting.
+- `ggplot2` [talk](ggplot2_cambr28oct2013.pdf) presented by Mark
+  Dunning at the CambR meeting.
 
-- [R Graph Catalog](http://shinyapps.stat.ubc.ca/r-graph-catalog/)
+- *Visualisation of high-dimensional data* (`md`, includes code to
+   generate figures) or slides in `html`.
+
+
