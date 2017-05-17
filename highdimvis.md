@@ -11,8 +11,13 @@ output:
 ## Visualisation of high-dimensional data 
 
 ```
-Laurent Gatto
+Laurent Gatto                      Computational Proteomics Unit
+https://lgatto.github.io           University of Cambridge
+lg390@cam.ac.uk                    @lgatt0
 ```
+
+Source: https://github.com/lgatto/visualisation
+
 
 
 
@@ -82,3 +87,17 @@ tuned before applying t-SNE.
 ### t-SNE
 - https://lvdmaaten.github.io/tsne/
 - http://distill.pub/2016/misread-tsne/
+
+## License
+
+This material is made available under the
+[Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/).
+
+You are free to **share** - copy and redistribute the material in any
+medium or format, and **adapt** - remix, transform, and build upon the
+material for any purpose, even commercially it.
+**Attribution** You must give appropriate credit, provide a link to
+the license, and indicate if changes were made. You may do so in any
+reasonable manner, but not in any way that suggests the licensor
+endorses you or your use.
+
