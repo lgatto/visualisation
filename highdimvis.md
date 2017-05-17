@@ -39,6 +39,10 @@ between all features (or samples) and then clusters/groups these based
 on these similarities. There are various distances measures and
 clustering algorithms that can be used. 
 
+Plots prepared with `dist` and `hclust` from the `stats` package and
+`mrkHClust` from
+[`pRoloc`](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html).
+
 ## {.fullpage}
 
 ![plot of chunk hclust](figure/hclust-1.png)
@@ -74,22 +78,27 @@ together, and will ignore large distances.
 Figures produces with `plot2D` function from the
 [`pRoloc` package](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html)
 
-
-## Parameter tuning
-
-**Beware** of the `perplexity` and `steps` parameters, that should be
-tuned before applying t-SNE.
-
-
 ## { .fullpage }
 
 ![plot of chunk tsneex](figure/tsneex-1.png)
 
-## References
 
-### t-SNE
-- https://lvdmaaten.github.io/tsne/
-- http://distill.pub/2016/misread-tsne/
+## Parameter tuning
+
+t-SNE has two important parameters that can substantially influence
+the clustering of the data
+
+- **Perplexity**: balances global and local aspects of the data.
+- **Iterations**: number of iterations before the clustering is
+  stopped.
+
+It is important to adapt these for different data.
+
+## { .fullpage }
+
+
+
+![plot of chunk tsnesplots](figure/tsnesplots-1.png)
 
 ## License
 
