@@ -18,7 +18,42 @@ lg390@cam.ac.uk                    @lgatt0
 Slides: http://bit.ly/highdimvis  
 Source: https://github.com/lgatto/visualisation  
 
+![CC-BY](./figs/cc1.jpg)
 
+
+
+
+
+## Introduction 
+
+* Unsupervised machine learning (clustering): make use of the data to
+  identify patterns of interest. 
+* Supervised machine learning (classification and regression): use
+  prior knowledge (such as known labels about a subset of the data) to
+  infer new information (labels) for the unlabelled or new data.
+
+## From data
+
+
+
+|          | Sample 1 | Sample 2 | Sample 3 | ... | group |
+|:---------|:--------:|:--------:|:--------:|:---:|:-----:|
+|Protein 1 |   8.12   |   7.54   |  14.54   | ... |   A   |
+|Protein 2 |  10.55   |  11.46   |  11.17   | ... |       |
+|Protein 3 |   7.49   |  12.21   |   8.14   | ... |   B   |
+|Protein 4 |  14.79   |  11.73   |   3.36   | ... |   A   |
+|...       |  10.99   |   9.08   |  13.37   | ... |       |
+
+## To visualisation, annotation and results
+
+![plot of chunk introvis](figure/introvis-1.png)
+
+## Content
+
+* Data 
+* Hierarchical clustering
+* Dimentionality reduction: PCA
+* Dimentionality reduction: t-SNE
 
 
 ## Proteomics examples
@@ -83,9 +118,9 @@ package.
 
 t-Distributed Stochastic Neighbour Embedding (t-SNE) is a *non-linear*
 dimensionality reduction techique, i.e. that different regions of the
-data space will be subjected to different transformations. In t-SNE
-will compress small distances, thus bringing close neighbours
-together, and will ignore large distances.
+data space will be subjected to different transformations. t-SNE will
+compress small distances, thus bringing close neighbours together, and
+will ignore large distances.
 
 Figures produces with `plot2D` function from the
 [`pRoloc`](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html)
@@ -98,8 +133,9 @@ package.
 
 ## Parameter tuning
 
-t-SNE has two important parameters that can substantially influence
-the clustering of the data
+t-SNE (as well as many other methods, in particular classification
+algorithms) has two important parameters that can substantially
+influence the clustering of the data
 
 - **Perplexity**: balances global and local aspects of the data.
 - **Iterations**: number of iterations before the clustering is
