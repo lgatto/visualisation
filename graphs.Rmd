@@ -12,11 +12,168 @@ abstract: |
 
 # Introduction
 
-This material is based on chapter 3 of the [*Modern Statistics for Modern Biology*](https://www.huber.embl.de/msmb/) book by Susan Holmes and Wolfgang Huber.
+This material is based on chapter 3 of the [*Modern Statistics for
+Modern Biology*](https://www.huber.embl.de/msmb/) book by Susan Holmes
+and Wolfgang Huber.
+
+We want to visualise data to 
+
+- interactively explore and understant data, i.e. *exploratory data
+  analysis*;
+- to present and *communicate results*, whether as a preliminary
+  analysis or final results.
+
+Our learning objectives are
+
+- Familiarise ourselves with plotting in R using base graphics and
+  `ggplot2`;
+- Understand the concepts behind the gramar of graphics and `ggplot2`;
+- Learn how to visualiste data along 1, 2 or more dimensions;
+- Learn about `plotly`, one package for ploducing interactive
+  visualisations.
 
 # Base plotting
 
+The default graphics system that comes with R, often called base R
+graphics is simple and fast. It is based on the painter's model or
+canvas, where different output are directly overlaid on top of each
+other.
+
+Below, we display the relation between the optical density of the
+deoxyribonuclease (DNase) protein as measure by an enzyme-linked
+immunosorbent assay (ELISA) assay for all observations.
+
+```{r dnase, fig.cap = "The default base `plot` function on the `DNase` data."}
+head(DNase)
+plot(DNase$con, DNase$density)
+```
+
+We can add some features on the plot, such vertical dotted lines for
+all observed observations and customise the look and feel of the plot
+by setting specific arguments to the `plot` function.
+
+```{r dnase2, fig.cap = "Customising a base figure using function arguments and overlaying new graphical features."}
+plot(DNase$con, DNase$density,
+     xlab = "DNase concentration (ng/ml)",
+     ylab = "Optical density",
+     pch = 1,
+     col = "steelblue")
+abline(v = unique(DNase$conc), lty = "dotted")
+```
+
+If we wanted to change anything to that figures, we would need to
+repeat all the commands and modify accordingly. Any additinal command
+would be added to the existing canvas.
+
+Below, we use the `hist` and `boxplot` functions to produce and
+histogram of all optical densities and a boxplot of the densities
+split by run.
+
+```{r hist_boxplot, fig.width = 14, fig.height = 7, fig.cap = "The base `hist` and `boxplot` functions, the latter using the formula interface."}
+par(mfrow = c(1, 2))
+hist(DNase$density)
+boxplot(density ~ Run, DNase)
+```
+
+The base graphics function are very effective to quickly produce out
+of the box figures. However, there is not global overview and
+parametrisation of the visualisation. The layout decisions have to be
+made up upfront (and if not adequate, the figure needs to be redrawn)
+and every aspectr of the figure is customised locally as function
+arguments.
+
+More generally, base graphics functions will work with various inputs:
+above we have wored with a `data.frame`, vectors and a formula. There
+is no unified type of data across all functions which makes it
+efficient for some types of data (if they match), but also very
+heterogeneous in terms of interface, leading to a lot of customisation
+code.
+
+Finally, defaults, and colours in particular, are poorly chosen.
+
 # `ggplot2`
+
+**`ggplot2`** is a plotting package that makes it simple to create
+complex plots from data in a data frame. It provides a more
+programmatic interface for specifying what variables to plot, how they
+are displayed, and general visual properties. The theoretical
+foundation that supports the `ggplot2` is the *Grammar of
+Graphics*[^gg]. Instead of producing the figure, the user defines and
+assembles the visual components into an object that is the
+displayed. There is a book about ggplot2[^ggbook] that provides a good
+overview, but it is outdated. The ggplot2 webpage
+(https://ggplot2.tidyverse.org) provides ample documentation.
+
+
+[^gg]: Wilkinson, Leland. 2005. The Grammar of Graphics (Statistics
+    and Computing). Berlin, Heidelberg: Springer-Verlag.
+
+[^ggbook]: Wickham, Hadley. 2016. ggplot2: Elegant Graphics for Data
+    Analysis. Springer-Verlag New York.
+
+
+To build a ggplot, we will use the following basic template that can
+be used for different types of plots:
+
+```
+ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +  <GEOM_FUNCTION>()
+```
+
+We need first to load the `ggplot2` package:
+
+```{r ggload}
+library("ggplot2")
+```
+
+- use the `ggplot()` function and bind the plot to a specific data frame using the
+      `data` argument
+
+```{r gg0, fig.cap = "We have only specified the data, and there's nothing to display yet."}
+ggplot(data = DNase)
+```
+
+- define a mapping (using the aesthetic (`aes`) function), by
+  selecting the variables to be plotted and specifying how to present
+  them in the graph, e.g. as x/y positions or characteristics such as
+  size, shape, color, etc.
+
+```{r gg1, fig.cap = "`ggplot2` can now generate the axes, ticks and ranges based on the data."}
+ggplot(data = DNase,
+       mapping = aes(x = conc, y = density))
+```
+
+- add *geoms* – graphical representations of the data in the plot
+  (points, lines, bars). To add a geom to the plot use the `+`
+  operator. Because we have two continuous variables, let's use
+  `geom_point()` first:
+
+```{r gg2, fig.cap = "Final figures with rendering of the data as a scatter plot."}
+ggplot(data = DNase,
+       mapping = aes(x = conc, y = density)) + 
+  geom_point()
+```
+
+It is possible to store the output of the `ggplot` function into a
+variable that can be visualised by either typing its name in the
+console or explicitly printing it (like any other variable).
+
+```{r ggobj}
+gg <- ggplot(data = DNase,
+             mapping = aes(x = conc, y = density)) + 
+    geom_point()
+print(gg)
+```
+
+Let's immediately customise this visualisaion to 
+- highlight how to re-use the `gg` object without repeating the
+  plotting code and
+- how we can add additional (identical or different) *goems* to a
+  plot.
+
+```{r gg3, fig.cap = "Adding another `geom_point` with its own (local) aesthetics. "}
+gg + geom_point(aes(colour = Run))
+```
+
 
 # Visualising 1D data
 
@@ -25,8 +182,6 @@ This material is based on chapter 3 of the [*Modern Statistics for Modern Biolog
 # Visualising data along more dimensions
 
 # Interactive visualisation
-
-
 
 # Session info {.unnumbered}
 
