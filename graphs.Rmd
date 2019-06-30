@@ -1,0 +1,35 @@
+---
+title: "Plotting and visualising data"
+author:
+- name: Laurent Gatto
+  affiliation: de Duve Institute, UCLouvain
+  email: laurent.gatto@uclouvain.be
+output:
+  BiocStyle::html_document
+abstract: |
+  Description of your vignette
+---
+
+# Introduction
+
+This material is based on chapter 3 of the [*Modern Statistics for Modern Biology*](https://www.huber.embl.de/msmb/) book by Susan Holmes and Wolfgang Huber.
+
+# Base plotting
+
+# `ggplot2`
+
+# Visualising 1D data
+
+# Visualising 2D data
+
+# Visualising data along more dimensions
+
+# Interactive visualisation
+
+
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
