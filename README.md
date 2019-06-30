@@ -9,6 +9,10 @@
    [`Rmd`](https://github.com/lgatto/visualisation/blob/master/highdimvis.Rmd),
    (for code to generate figures) or
    [slides in `html`](https://htmlpreview.github.io/?https://github.com/lgatto/visualisation/blob/master/highdimvis.html#).
+   
+- A [course]((https://htmlpreview.github.io/?https://github.com/lgatto/visualisation/blob/master/graphs.html) based on on chapter 3 of the [*Modern Statistics for Modern
+  Biology*](https://www.huber.embl.de/msmb/) book by Susan Holmes and
+  Wolfgang Huber.
 
 
 ### License
