@@ -273,7 +273,7 @@ bxplot
 ```
 
 **Exercise:** Repeat the above figure replaceing the boxes by violins
-using the `geom_violin`.
+using the `geom_violin`. Which one do you think does a better job?
 
 <details>
 
