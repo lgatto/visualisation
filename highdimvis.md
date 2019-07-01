@@ -11,9 +11,9 @@ output:
 ## Visualisation of high-dimensional data 
 
 ```
-Laurent Gatto                      Computational Proteomics Unit
-https://lgatto.github.io           University of Cambridge
-lg390@cam.ac.uk                    @lgatt0
+Laurent Gatto                      Computational Biology
+https://lgatto.github.io           de Duve Institute, UCLouvain
+laurent.gatto@uclouvain.be         @lgatt0
 ```
 Slides: http://bit.ly/highdimvis  
 Source: https://github.com/lgatto/visualisation  
