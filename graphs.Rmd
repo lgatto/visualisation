@@ -339,8 +339,8 @@ densplot + ecdfplot
 - **Boxplot** makes sense for unimodal distributions.
 
 - **Histogram** requires definition of bins (width, positions) and can
-  create visual artifacts esp. If the number of data points is not
-  large.
+  create visual artifacts especially if the number of data points is
+  not large.
 
 - **Density** requires the choice of bandwidth; obscures the sample
   size (i.e. the uncertainty of the estimate).
