@@ -174,7 +174,19 @@ Let's immediately customise this visualisaion to
 gg + geom_point(aes(colour = Run))
 ```
 
+Below is an example of more elaborated composition, overlaying points
+and a non-linear *loess* regression.
 
+
+```{r gg4}
+dftx <- data.frame(t(Biobase::exprs(x)), pData(x))
+ggplot(dftx, aes(x = X1426642_at, y = X1418765_at)) +
+  geom_point( shape = 1 ) +
+  geom_smooth( method = "loess" )
+```
+
+  
+  
 # Visualising 1D data
 
 # Visualising 2D data
