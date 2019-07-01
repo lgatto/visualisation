@@ -6,9 +6,14 @@ author:
   email: laurent.gatto@uclouvain.be
 output:
   BiocStyle::html_document
-abstract: |
-  Description of your vignette
 ---
+
+```{r env, message = FALSE}
+suppressPackageStartupMessages(library("Biobase"))
+suppressPackageStartupMessages(library("dplyr"))
+suppressPackageStartupMessages(library("Hmisc"))
+suppressPackageStartupMessages(library("plotly"))
+```
 
 # Introduction
 
@@ -157,7 +162,7 @@ It is possible to store the output of the `ggplot` function into a
 variable that can be visualised by either typing its name in the
 console or explicitly printing it (like any other variable).
 
-```{r ggobj}
+```{r ggobj, fig.cap = "Saving and printing an object."}
 gg <- ggplot(data = DNase,
              mapping = aes(x = conc, y = density)) + 
     geom_point()
@@ -175,28 +180,246 @@ gg + geom_point(aes(colour = Run))
 ```
 
 Below is an example of more elaborated composition, overlaying points
-and a non-linear *loess* regression.
+and a non-linear *loess* regression. But first, let's load a object
+containing microarray data from the [`hiiragi2013.rda`
+file](https://github.com/lgatto/visualisation/raw/master/data/hiiragi2013.rda).
 
 
-```{r gg4}
-dftx <- data.frame(t(Biobase::exprs(x)), pData(x))
-ggplot(dftx, aes(x = X1426642_at, y = X1418765_at)) +
-  geom_point( shape = 1 ) +
-  geom_smooth( method = "loess" )
+
+```{r hiirago2013, echo = FALSE}
+if (!file.exists("./data/hiiragi2013.rda"))
+    download.file("https://github.com/lgatto/visualisation/raw/master/data/hiiragi2013.rda", "./data/hiiragi2013.rda")
 ```
 
+Below, we combine the (transposed) expression values (extraced from
+the `hiiragi2013` object with `exprs`) and sample metadata (extraced
+from the `hiiragi2013` object with `pData`)
+
+```{r load}
+load("./data/hiiragi2013.rda")
+library("Biobase")
+dftx <- data.frame(t(Biobase::exprs(hiiragi2013)), pData(hiiragi2013))
+dftx[1:10, 1:3]
+dftx[1:10, 45105:45109]
+```
+
+
+```{r gg4, fig.cap = "Modelling the relation between the expression of X1426642_at and X1418765_at."}
+ggplot(dftx, aes(x = X1426642_at, y = X1418765_at)) +
+    geom_point(shape = 1) +
+    geom_smooth(method = "loess")
+```
+
+And, adding coulours representing the different samples
+
+```{r gg5, fig.cap = "Modelling the relation between the expression of X1426642_at and X1418765_at and annotating samples."}
+ggplot(dftx, aes(x = X1426642_at, y = X1418765_at))  +
+  geom_point(aes(color = sampleColour), shape = 19) +
+  geom_smooth(method = "loess")
+```
   
   
 # Visualising 1D data
 
+Let's start by exploring some 1 dimensional visualisation. First, we
+convert a microarray gene expression data to a data.frame, fit for
+some `ggplot2` visualisation, focusing on genes Fgf4, Gata4, Gata6 and
+Sox2.
+
+
+```{r selprobes}
+selectedProbes <- c(Fgf4 = "1420085_at", Gata4 = "1418863_at",
+                    Gata6 = "1425463_at",  Sox2 = "1416967_at")
+
+library("dplyr")
+library("tidyr")
+tmp <- data.frame(t(exprs(hiiragi2013[selectedProbes, ])))
+names(tmp) <- names(selectedProbes)
+tmp$sample <- rownames(tmp)
+genes <- gather(tmp, key = "gene", value = "expression", -sample)
+head(genes)
+```
+
+## Histogramme
+
+```{r hist, fig.cap = "Distribution of the Gata4 expression"}
+genes %>%
+    filter(gene == "Gata4") %>%
+    ggplot(aes(x = expression)) + geom_histogram()
+```
+
+
+## Box plots
+
+```{r boxplot, fig.cap = "A boxplot of expression values."}
+p <- ggplot(genes, aes(x = gene, y = expression, fill = gene))
+bxplot <- p + geom_boxplot()
+bxplot
+```
+
+**Exercise:** Repeat the above figure replaceing the boxes by violins
+using the `geom_violin`.
+
+<details>
+
+```{r violin, fig.cap = "A violin plot of expression values."}
+vlnplot <- p + geom_violin()
+vlnplot
+```
+</details>
+
+
+
+## Dot plots and beeswarm plots
+
+It is also possibly to visualise all points to get a sense of their
+distribution.
+
+
+```{r jitter}
+jtrplot <- p +
+    geom_jitter(aes(colour = gene)) +
+    theme(legend.position = "none")
+```
+
+```{r dot}
+dotplot <- p + geom_dotplot(binaxis = "y", binwidth = 1/6,
+                            stackdir = "center", stackratio = 0.75,
+                            aes(color = gene)) +
+    theme(legend.position = "none")
+```
+
+```{r bee}
+library("ggbeeswarm")
+beeplot <- p + geom_beeswarm(aes(color = gene)) + 
+    theme(legend.position = "none")
+```
+
+```{r showdots, fig.cap = "Showing all expression values using jittering (left), a dotplot (centre) and a beeswarn plot.", fig.with = 16, fig.height = 4}
+library(patchwork)
+jtrplot + dotplot + beeplot
+```
+
+## Density and ecdf plots
+
+```{r dens}
+densplot <- ggplot(genes, aes(x = expression, color = gene)) +
+    geom_density() +
+    theme(legend.position = "none")
+```
+
+```{r ecdf}
+ecdfplot <- ggplot(genes, aes(x = expression, color = gene)) +
+    stat_ecdf() +
+    theme(legend.position = "none")
+```
+
+
+```{r, fig.cap = "Density and cumulative density functions of expression values.", fig.with = 12, fig.height = 6}
+densplot + ecdfplot
+```
+
+## Summary
+
+- **Boxplot** makes sense for unimodal distributions.
+
+- **Histogram** requires definition of bins (width, positions) and can
+  create visual artifacts esp. If the number of data points is not
+  large.
+
+- **Density** requires the choice of bandwidth; obscures the sample
+  size (i.e. the uncertainty of the estimate).
+  
+- **ecdf** does not have these problems; but is more abstract and
+  interpretation requires more training. Good for reading off
+  quantiles and shifts in location in comparative plots.
+
+- **beeswarm**: for up to a few dozens of points, just show the data.
+
 # Visualising 2D data
+
+```{r sc1, fig.cap = "Scatter plot comparing the expression of two probesets."}
+dfx <- as.data.frame(Biobase::exprs(hiiragi2013))
+scp <- ggplot(dfx, aes(x= `59 E4.5 (PE)`, y = `92 E4.5 (FGF4-KO)`))
+scp + geom_point()
+```
+
+**Exercise:** The overplotting of the dots stops us from learning
+anything about the density of the different regions of the plot. Use
+the `alpha` parameter to `geom_points` between 0 (full transparency)
+to 1 (opaque, default).
+
+<details>
+```{r scp2, fig.cap = "Transparency can help distinguish regions of different densities."}
+scp + geom_point(alpha = 0.1)
+```
+</details>
+
+
+```{r scp3, fig.cap = "Focusing on contours rather that individual values."}
+scp + geom_density2d(h = 0.5, bins = 60)
+```
+
+```{r scp5, fig.cap = "Local density summaries."}
+scp + geom_hex() 
+```
+
 
 # Visualising data along more dimensions
 
+When visualising data along additional dimenstion, we can parameterise
+the points by setting their shape, colour, size and transparency, that
+can be set with point aesthetics such as `fill`, `color`, `shape`,
+`size` and `alpha`.
+
+A very powerful way to represent data along additional dimensions is
+facetting, i.e. producing sub-plots for different subsets of the
+data. Below, we first re-annotate the data using some regular
+expressions 
+
+
+```{r facet1, fig.cap = "Different sub-plots for different lineages."}
+ggplot(dftx, aes(x = X1426642_at, y = X1418765_at)) +
+  geom_point() +
+    facet_grid( . ~ lineage )
+```
+
+```{r facet2, fig.cap = "Different sub-plots for different lineages and embryonic stages."}
+ggplot(dftx,
+       aes(x = X1426642_at, y = X1418765_at)) +
+    geom_point() +
+    facet_grid( Embryonic.day ~ lineage )
+```
+
+**Exercise:** Use facets to visualise the distribution of four Fgf4,
+Gata4, Gata6 and Sox2 genes in the `genes` data.
+
+<details>
+
+```{r hist2}
+ggplot(genes, aes(x = expression)) +
+    geom_histogram() +
+    facet_wrap(~ gene)
+```
+</details>
+
 # Interactive visualisation
+
+```{r plotly, fig.cap = "Interactive visualisation with plotly"}
+library("plotly")
+
+scp <- ggplot(dfx[1:100, ],
+              aes(x= `59 E4.5 (PE)`, y = `92 E4.5 (FGF4-KO)`))
+
+scp2 <- scp + geom_point()
+ggplotly(scp2)
+```
+
 
 # Session info {.unnumbered}
 
-```{r sessionInfo, echo=FALSE}
+```{r sessionInfo, echo = FALSE}
 sessionInfo()
 ```
+
+
