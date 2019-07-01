@@ -8,7 +8,7 @@ output:
   BiocStyle::html_document
 ---
 
-```{r env, message = FALSE}
+```{r env, message = FALSE, echo = FALSE}
 suppressPackageStartupMessages(library("Biobase"))
 suppressPackageStartupMessages(library("dplyr"))
 suppressPackageStartupMessages(library("Hmisc"))
@@ -70,15 +70,18 @@ If we wanted to change anything to that figures, we would need to
 repeat all the commands and modify accordingly. Any additinal command
 would be added to the existing canvas.
 
-Below, we use the `hist` and `boxplot` functions to produce and
+**Exercise:** use the `hist` and `boxplot` functions to produce and
 histogram of all optical densities and a boxplot of the densities
 split by run.
+
+<details>
 
 ```{r hist_boxplot, fig.width = 14, fig.height = 7, fig.cap = "The base `hist` and `boxplot` functions, the latter using the formula interface."}
 par(mfrow = c(1, 2))
 hist(DNase$density)
 boxplot(density ~ Run, DNase)
 ```
+</details>
 
 The base graphics function are very effective to quickly produce out
 of the box figures. However, there is not global overview and
@@ -96,7 +99,7 @@ code.
 
 Finally, defaults, and colours in particular, are poorly chosen.
 
-# `ggplot2`
+# The `ggplot2` package
 
 **`ggplot2`** is a plotting package that makes it simple to create
 complex plots from data in a data frame. It provides a more
@@ -158,6 +161,9 @@ ggplot(data = DNase,
   geom_point()
 ```
 
+**Exercise:** compare the `ggplot2` and base graphics version of the
+density vs. concentration plot. Which one do you prefer, and why?
+
 It is possible to store the output of the `ggplot` function into a
 variable that can be visualised by either typing its name in the
 console or explicitly printing it (like any other variable).
@@ -178,6 +184,15 @@ Let's immediately customise this visualisaion to
 ```{r gg3, fig.cap = "Adding another `geom_point` with its own (local) aesthetics. "}
 gg + geom_point(aes(colour = Run))
 ```
+
+**Exercise:** What do you think of the colours used to differentiate
+the different runs above? 
+
+<details>
+```{r ggex, fig.cap = "Setting the Run to a category by coercing it to a character, rather than a numeric."}
+gg + geom_point(aes(colour = as.character(Run)))
+```
+</details>
 
 Below is an example of more elaborated composition, overlaying points
 and a non-linear *loess* regression. But first, let's load a object
