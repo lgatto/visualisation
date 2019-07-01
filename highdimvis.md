@@ -96,10 +96,10 @@ informative dimensions or perform calculations more efficiently.
 ## Principal Component Analysis
 
 Principal Component Analysis (PCA) is a technique that transforms the
-original n-dimentional data into a new n-dimentional space. Along
-these new dimensions, called principal components, the data expresses
-most of its variability along the first PC, then second, .... These
-new dimensions are *linear combinations* of the orignal data.
+original n-dimentional data into a new data space. Along these new
+dimensions, called principal components, the data expresses most of
+its variability along the first PC, then second, .... These new
+dimensions are *linear combinations* of the orignal data.
 
 Figures produces with `plot2D` function from the
 [`pRoloc`](https://bioconductor.org/packages/devel/bioc/html/pRoloc.html)
