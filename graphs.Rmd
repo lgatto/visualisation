@@ -96,11 +96,11 @@ The base graphics function are very effective to quickly produce out
 of the box figures. However, there is not global overview and
 parametrisation of the visualisation. The layout decisions have to be
 made up upfront (and if not adequate, the figure needs to be redrawn)
-and every aspectr of the figure is customised locally as function
+and every aspect of the figure is customised locally as function
 arguments.
 
 More generally, base graphics functions will work with various inputs:
-above we have wored with a `data.frame`, vectors and a formula. There
+above we have worked with a `data.frame`, vectors and a formula. There
 is no unified type of data across all functions which makes it
 efficient for some types of data (if they match), but also very
 heterogeneous in terms of interface, leading to a lot of customisation
@@ -118,7 +118,7 @@ foundation that supports the `ggplot2` is the *Grammar of
 Graphics*[^gg]. Instead of producing the figure, the user defines and
 assembles the visual components into an object that is the
 displayed. There is a book about ggplot2[^ggbook] that provides a good
-overview, but it is outdated. The ggplot2 webpage
+overview, but it is outdated. The ggplot2 web page
 (https://ggplot2.tidyverse.org) provides ample documentation.
 
 
@@ -152,7 +152,7 @@ ggplot(data = DNase)
 - define a mapping (using the aesthetic (`aes`) function), by
   selecting the variables to be plotted and specifying how to present
   them in the graph, e.g. as x/y positions or characteristics such as
-  size, shape, color, etc.
+  size, shape, colour, etc.
 
 ```{r gg1, fig.cap = "`ggplot2` can now generate the axes, ticks and ranges based on the data."}
 ggplot(data = DNase,
@@ -184,10 +184,10 @@ gg <- ggplot(data = DNase,
 print(gg)
 ```
 
-Let's immediately customise this visualisaion to 
+Let's immediately customise this visualisation to 
 - highlight how to re-use the `gg` object without repeating the
   plotting code and
-- how we can add additional (identical or different) *goems* to a
+- how we can add additional (identical or different) *geoms* to a
   plot.
 
 ```{r gg3, fig.cap = "Adding another `geom_point` with its own (local) aesthetics. "}
@@ -221,8 +221,8 @@ if (!file.exists("./data/hiiragi2013.rda"))
     download.file("https://github.com/lgatto/visualisation/raw/master/data/hiiragi2013.rda", "./data/hiiragi2013.rda")
 ```
 
-Below, we combine the (transposed) expression values (extraced from
-the `hiiragi2013` object with `exprs`) and sample metadata (extraced
+Below, we combine the (transposed) expression values (extracted from
+the `hiiragi2013` object with `exprs`) and sample metadata (ext-raced
 from the `hiiragi2013` object with `pData`)
 
 ```{r load}
@@ -240,7 +240,7 @@ ggplot(dftx, aes(x = X1426642_at, y = X1418765_at)) +
     geom_smooth(method = "loess")
 ```
 
-And, adding coulours representing the different samples
+And, adding colours representing the different samples
 
 ```{r gg5, fig.cap = "Modelling the relation between the expression of X1426642_at and X1418765_at and annotating samples."}
 ggplot(dftx, aes(x = X1426642_at, y = X1418765_at))  +
@@ -298,7 +298,7 @@ bxplot <- p + geom_boxplot()
 bxplot
 ```
 
-**Exercise:** Repeat the above figure replaceing the boxes by violins
+**Exercise:** Repeat the above figure replacing the boxes by violins
 using the `geom_violin`. Which one do you think does a better job?
 
 <!-- <details> -->
@@ -312,7 +312,7 @@ using the `geom_violin`. Which one do you think does a better job?
 
 ## Dot plots and beeswarm plots
 
-When the data aren't too large, tt is also possibly to visualise all
+When the data aren't too large, it is also possibly to visualise all
 points to get a sense of their distribution.
 
 
@@ -371,7 +371,7 @@ densplot + ecdfplot
 - **Boxplot** makes sense for unimodal distributions (see below).
 
 - **Histogram** requires definition of bins (width, positions) and can
-  create visual artifacts especially if the number of data points is
+  create visual artefacts especially if the number of data points is
   not large.
 
 - **Density** requires the choice of bandwidth; obscures the sample
@@ -412,7 +412,7 @@ scp <- ggplot(dfx, aes(x= `59 E4.5 (PE)`,
 scp + geom_point()
 ```
 
-**Exercise:** The overplotting of the dots stops us from learning
+**Exercise:** The over-plotting of the dots stops us from learning
 anything about the density of the different regions of the plot. Use
 the `alpha` parameter to `geom_points` between 0 (full transparency)
 to 1 (opaque, default).
@@ -432,13 +432,12 @@ scp + geom_density2d(h = 0.5, bins = 60)
 scp + geom_hex() 
 ```
 
-
 # Visualising data along more dimensions
 
-When visualising data along additional dimenstion, we can parameterise
+When visualising data along additional dimension, we can parameterise
 the points by setting their shape, colour, size and transparency, that
-can be set with point aesthetics such as `fill`, `color`, `shape`,
-`size` and `alpha`.
+can be set with point aesthetics such as `fill`, `color` (or
+`colour`), `shape`, `size` and `alpha`.
 
 A very powerful way to represent data along additional dimensions is
 facetting, i.e. producing sub-plots for different subsets of the
