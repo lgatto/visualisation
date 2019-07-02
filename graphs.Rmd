@@ -74,14 +74,14 @@ would be added to the existing canvas.
 histogram of all optical densities and a boxplot of the densities
 split by run.
 
-<details>
+<!-- <details> -->
 
-```{r hist_boxplot, fig.width = 14, fig.height = 7, fig.cap = "The base `hist` and `boxplot` functions, the latter using the formula interface."}
-par(mfrow = c(1, 2))
-hist(DNase$density)
-boxplot(density ~ Run, DNase)
-```
-</details>
+<!-- ```{r hist_boxplot, fig.width = 14, fig.height = 7, fig.cap = "The base `hist` and `boxplot` functions, the latter using the formula interface."} -->
+<!-- par(mfrow = c(1, 2)) -->
+<!-- hist(DNase$density) -->
+<!-- boxplot(density ~ Run, DNase) -->
+<!-- ``` -->
+<!-- </details> -->
 
 The base graphics function are very effective to quickly produce out
 of the box figures. However, there is not global overview and
@@ -188,16 +188,22 @@ gg + geom_point(aes(colour = Run))
 **Exercise:** What do you think of the colours used to differentiate
 the different runs above? 
 
-<details>
-```{r ggex, fig.cap = "Setting the Run to a category by coercing it to a character, rather than a numeric."}
-gg + geom_point(aes(colour = as.character(Run)))
-```
-</details>
+<!-- <details> -->
+<!-- ```{r ggex, fig.cap = "Setting the Run to a category by coercing it to a character, rather than a numeric."} -->
+<!-- gg + geom_point(aes(colour = as.character(Run))) -->
+<!-- ``` -->
+<!-- </details> -->
 
 Below is an example of more elaborated composition, overlaying points
 and a non-linear *loess* regression. But first, let's load a object
 containing microarray data from the [`hiiragi2013.rda`
-file](https://github.com/lgatto/visualisation/raw/master/data/hiiragi2013.rda).
+file](https://github.com/lgatto/visualisation/raw/master/data/hiiragi2013.rda). The
+data is originally available from the
+[`Hiiragi2013`](http://bioconductor.org/packages/release/data/experiment/html/Hiiragi2013.html)
+package and *Cell-to-cell expression variability followed by signal
+reinforcement progressively segregates early mouse lineages* paper by
+Y. Ohnishi *et al.* Nature Cell Biology (2014) 16(1):
+27-37. [doi:10.1038/ncb2881](https://www.nature.com/articles/ncb2881).
 
 
 
@@ -275,13 +281,12 @@ bxplot
 **Exercise:** Repeat the above figure replaceing the boxes by violins
 using the `geom_violin`. Which one do you think does a better job?
 
-<details>
-
-```{r violin, fig.cap = "A violin plot of expression values."}
-vlnplot <- p + geom_violin()
-vlnplot
-```
-</details>
+<!-- <details> -->
+<!-- ```{r violin, fig.cap = "A violin plot of expression values."} -->
+<!-- vlnplot <- p + geom_violin() -->
+<!-- vlnplot -->
+<!-- ``` -->
+<!-- </details> -->
 
 
 
@@ -364,11 +369,11 @@ anything about the density of the different regions of the plot. Use
 the `alpha` parameter to `geom_points` between 0 (full transparency)
 to 1 (opaque, default).
 
-<details>
-```{r scp2, fig.cap = "Transparency can help distinguish regions of different densities."}
-scp + geom_point(alpha = 0.1)
-```
-</details>
+<!-- <details> -->
+<!-- ```{r scp2, fig.cap = "Transparency can help distinguish regions of different densities."} -->
+<!-- scp + geom_point(alpha = 0.1) -->
+<!-- ``` -->
+<!-- </details> -->
 
 
 ```{r scp3, fig.cap = "Focusing on contours rather that individual values."}
@@ -409,14 +414,14 @@ ggplot(dftx,
 **Exercise:** Use facets to visualise the distribution of four Fgf4,
 Gata4, Gata6 and Sox2 genes in the `genes` data.
 
-<details>
+<!-- <details> -->
 
-```{r hist2}
-ggplot(genes, aes(x = expression)) +
-    geom_histogram() +
-    facet_wrap(~ gene)
-```
-</details>
+<!-- ```{r hist2} -->
+<!-- ggplot(genes, aes(x = expression)) + -->
+<!--     geom_histogram() + -->
+<!--     facet_wrap(~ gene) -->
+<!-- ``` -->
+<!-- </details> -->
 
 # Interactive visualisation
 
@@ -430,6 +435,7 @@ scp2 <- scp + geom_point()
 ggplotly(scp2)
 ```
 
+See https://plot.ly/r for  examples of interactive graphics online.
 
 # Session info {.unnumbered}
 
