@@ -242,26 +242,37 @@ ggplot(dftx, aes(x = X1426642_at, y = X1418765_at))  +
   
 # Visualising 1D data
 
-Let's start by exploring some 1 dimensional visualisation. First, we
-convert a microarray gene expression data to a data.frame, fit for
-some `ggplot2` visualisation, focusing on genes Fgf4, Gata4, Gata6 and
-Sox2.
+Let's start by exploring some 1 dimensional visualisation. This is
+very relevant for omics data such as transcriptomics or quantitative
+proteomics, when contrasting the expression values across multiple
+samples.
+
+
+First, we convert a microarray gene expression data to a data.frame,
+fit for some `ggplot2` visualisation, focusing on genes Fgf4, Gata4,
+Gata6 and Sox2.
 
 
 ```{r selprobes}
 selectedProbes <- c(Fgf4 = "1420085_at", Gata4 = "1418863_at",
                     Gata6 = "1425463_at",  Sox2 = "1416967_at")
+```
 
+```{r gather0}
 library("dplyr")
 library("tidyr")
 tmp <- data.frame(t(exprs(hiiragi2013[selectedProbes, ])))
 names(tmp) <- names(selectedProbes)
 tmp$sample <- rownames(tmp)
+head(tmp)
+```
+
+```{r gather}
 genes <- gather(tmp, key = "gene", value = "expression", -sample)
 head(genes)
 ```
 
-## Histogramme
+## Histogram
 
 ```{r hist, fig.cap = "Distribution of the Gata4 expression"}
 genes %>%
@@ -292,8 +303,8 @@ using the `geom_violin`. Which one do you think does a better job?
 
 ## Dot plots and beeswarm plots
 
-It is also possibly to visualise all points to get a sense of their
-distribution.
+When the data aren't too large, tt is also possibly to visualise all
+points to get a sense of their distribution.
 
 
 ```{r jitter}
@@ -302,12 +313,18 @@ jtrplot <- p +
     theme(legend.position = "none")
 ```
 
+In a dotplot, the position of the points along the y axis is
+discretised into bins (set as 1/6 below) and the points are then
+stacked next to each other.
+
 ```{r dot}
 dotplot <- p + geom_dotplot(binaxis = "y", binwidth = 1/6,
                             stackdir = "center", stackratio = 0.75,
                             aes(color = gene)) +
     theme(legend.position = "none")
 ```
+
+The beeswarm algorithms tries to avoid overlapping points.
 
 ```{r bee}
 library("ggbeeswarm")
@@ -321,6 +338,7 @@ jtrplot + dotplot + beeplot
 ```
 
 ## Density and ecdf plots
+
 
 ```{r dens}
 densplot <- ggplot(genes, aes(x = expression, color = gene)) +
@@ -341,7 +359,7 @@ densplot + ecdfplot
 
 ## Summary
 
-- **Boxplot** makes sense for unimodal distributions.
+- **Boxplot** makes sense for unimodal distributions (see below).
 
 - **Histogram** requires definition of bins (width, positions) and can
   create visual artifacts especially if the number of data points is
@@ -356,11 +374,32 @@ densplot + ecdfplot
 
 - **beeswarm**: for up to a few dozens of points, just show the data.
 
+
+The number of modes of a distribution depends on scale transformation
+of the data.
+
+```{r sim, fig.cap = "Histograms of the same data without (left) and with (right) log-transformation."}
+sim <- data.frame(x = exp(rnorm(n = 1e5,
+                                mean = sample(c(2, 5),
+                                              size = 1e5,
+                                              replace = TRUE))))
+
+p1 <-  ggplot(sim, aes(x)) +
+    geom_histogram(binwidth = 10, boundary = 0) +
+    xlim(0, 400)
+p2 <-  ggplot(sim, aes(log(x))) +
+    geom_histogram(bins = 30)
+p1 + p2
+```
+
+This also applies to density plots.
+
 # Visualising 2D data
 
-```{r sc1, fig.cap = "Scatter plot comparing the expression of two probesets."}
+```{r sc1, fig.cap = "Scatter plot comparing the expression of a wild-type vs. FGF4 KO."}
 dfx <- as.data.frame(Biobase::exprs(hiiragi2013))
-scp <- ggplot(dfx, aes(x= `59 E4.5 (PE)`, y = `92 E4.5 (FGF4-KO)`))
+scp <- ggplot(dfx, aes(x= `59 E4.5 (PE)`, 
+                       y = `92 E4.5 (FGF4-KO)`)) 
 scp + geom_point()
 ```
 
@@ -398,10 +437,13 @@ data. Below, we first re-annotate the data using some regular
 expressions 
 
 
-```{r facet1, fig.cap = "Different sub-plots for different lineages."}
-ggplot(dftx, aes(x = X1426642_at, y = X1418765_at)) +
+```{r facet1, fig.cap = "Different sub-plots for different lineages using colours (left) of facets(right) to distinguish the different lineages."}
+p1 <- ggplot(dftx, aes(x = X1426642_at, y = X1418765_at, colour = lineage)) +
+  geom_point()
+p2 <- ggplot(dftx, aes(x = X1426642_at, y = X1418765_at)) +
   geom_point() +
     facet_grid( . ~ lineage )
+p1 + p2
 ```
 
 ```{r facet2, fig.cap = "Different sub-plots for different lineages and embryonic stages."}
@@ -411,8 +453,9 @@ ggplot(dftx,
     facet_grid( Embryonic.day ~ lineage )
 ```
 
-**Exercise:** Use facets to visualise the distribution of four Fgf4,
-Gata4, Gata6 and Sox2 genes in the `genes` data.
+**Exercise:** Use facets to visualise the distribution of the four
+Fgf4, Gata4, Gata6 and Sox2 genes in the `genes` data using
+histograms.
 
 <!-- <details> -->
 
