@@ -70,6 +70,15 @@ If we wanted to change anything to that figures, we would need to
 repeat all the commands and modify accordingly. Any additinal command
 would be added to the existing canvas.
 
+**Exercise:** How would you produce a figure that differentiates the
+different runs using base graphics?
+
+<!-- <details> -->
+<!-- ```{r colbyrun} -->
+<!-- plot(DNase$con, DNase$density, col = DNase$Run) -->
+<!-- ``` -->
+<!-- </details> -->
+
 **Exercise:** use the `hist` and `boxplot` functions to produce and
 histogram of all optical densities and a boxplot of the densities
 split by run.
